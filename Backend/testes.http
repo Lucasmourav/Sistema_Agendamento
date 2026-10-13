@@ -1,0 +1,39 @@
+### Testar Cadastro de Usuário
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Alex Silva",
+  "email": "alex@email.com",
+  "password": "senha123"
+}
+
+###
+
+### Testar Login 
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "alex@email.com",
+  "password": "senha123"
+}
+
+### 1. Ver Serviços Disponíveis 
+GET http://localhost:5000/api/appointments/services
+
+###
+
+### 2. Criar um Agendamento 
+POST http://localhost:5000/api/appointments/book
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3OTA5NDU0ODc1MjMiLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNzkwOTQ1NDkwLCJleHAiOjE3OTEwMzE4OTB9.sysURbM3sBF_fIHKQFMSIZ763eRjMV8vz_B5iSkgL-s
+
+{
+  "serviceId": "1",
+  "dateTime": "2026-10-15 14:00"
+}
+
+###
+
+### 3. Testar Horário Duplicado 
