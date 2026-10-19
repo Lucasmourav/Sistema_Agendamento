@@ -1,5 +1,5 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');// Importa o módulo bcryptjs para criptografar senhas.
+const jwt = require('jsonwebtoken');// Importa o módulo jsonwebtoken para gerar tokens JWT.
 
 // Banco de dados em memória (Um array simples)
 const usersDatabase = [];
@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
       email, // Recebe o e-mail do usuário
       password: hashedPassword, // Armazena a senha criptografada
       role: role || 'client' // Define o papel do usuário, padrão é 'client'
-    };
+    };// Cria um novo objeto de usuário com as informações fornecidas e a senha criptografada.
     
     usersDatabase.push(newUser); //Salva no array usersDatabase.
 
@@ -41,6 +41,7 @@ exports.login = async (req, res) => {
 
     // Verifica se a senha está correta
     const isMatch = await bcrypt.compare(password, user.password);
+    // Compara a senha fornecida com a senha armazenada no banco de dados usando bcrypt. Se não houver correspondência, retorna um erro 400 com a mensagem "Credenciais inválidas".
     if (!isMatch) return res.status(400).json({ message: 'Credenciais inválidas.' });
 
     // Gera o Token JWT
@@ -48,11 +49,11 @@ exports.login = async (req, res) => {
       { id: user.id, role: user.role },
       process.env.JWT_SECRET || 'chave_reserva',
       { expiresIn: '1d' }
-    );
+    );// Gera um token JWT com o id e role do usuário, usando uma chave secreta e definindo a expiração para 1 dia.
 
-    res.json({ token, user: { id: user.id, name: user.name, role: user.role } });
+    res.json({ token, user: { id: user.id, name: user.name, role: user.role } });// Retorna o token e as informações do usuário (id, nome e papel) em formato JSON.
   } catch (error) {
-    res.status(500).json({ message: 'Erro no servidor.', error: error.message });
+    res.status(500).json({ message: 'Erro no servidor.', error: error.message });// Em caso de erro, retorna um erro 500 com a mensagem "Erro no servidor" e o detalhe do erro.
   }
 };
 
